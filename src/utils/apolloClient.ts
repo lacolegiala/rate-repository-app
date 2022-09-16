@@ -3,9 +3,13 @@ import { Constants } from 'react-native-unimodules';
 import { setContext } from '@apollo/client/link/context';
 import AuthStorage from './authStorage';
 
+const { apolloUri } = Constants.manifest.extra.env;
+
+console.log('ap', apolloUri)
+
 const httpLink = createHttpLink({
   // Replace the IP address part with your own IP address!
-  uri: Constants.manifest.extra.apolloUri,
+  uri: apolloUri
 });
 
 const createApolloClient = (authStorage: AuthStorage) => {

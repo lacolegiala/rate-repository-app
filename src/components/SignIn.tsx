@@ -13,7 +13,6 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Password is required')
 })
 
-
 const styles = StyleSheet.create({
   formCard: {
     backgroundColor: 'white'
@@ -67,7 +66,7 @@ const SignIn = () => {
         <View style={styles.formCard}>
           <FormikTextInput secure={false} name='username' placeholder='Username' />
           <FormikTextInput secure={true} name='password' placeholder='Password' />
-          <Pressable style={styles.submitButton} onPress={() => handleSubmit}>
+          <Pressable style={styles.submitButton} onPress={() => handleSubmit()}>
             <Text fontSize='regular' color='appBarText' fontWeight='bold'>Sign in</Text>
           </Pressable>
         </View>

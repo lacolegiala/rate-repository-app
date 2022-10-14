@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
 import Text from './Text';
 import Constants from 'expo-constants';
 import { Link } from 'react-router-native';
+import { useQuery } from '@apollo/client';
+import { GET_USER } from '../graphql/queries';
+import { AuthenticatedUser } from '../types';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,6 +19,11 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const { data } = useQuery<AuthenticatedUser>(GET_USER, {
+    fetchPolicy: 'cache-and-network'
+  })
+  console.log('dataaaaa', data)
+
   return (
     <Pressable>
       <View style={styles.container}>
@@ -26,7 +34,8 @@ const AppBar = () => {
           </Text>
         </Link>
         <Link to='/signin'>
-          <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>
+          {data && data.username ? <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
+          : <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>}
         </Link>
       </ScrollView>
       </View>

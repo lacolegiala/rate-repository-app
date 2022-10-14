@@ -20,3 +20,8 @@ export type AuthenticateInput = {
   username: string,
   password: string
 }
+
+export type AuthenticatedUser = {
+  username: string,
+  id: string
+}

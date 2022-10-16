@@ -22,7 +22,6 @@ const AppBar = () => {
   const { data } = useQuery<AuthenticatedUser>(GET_USER, {
     fetchPolicy: 'cache-and-network'
   })
-  console.log('dataaaaa', data)
 
   return (
     <Pressable>
@@ -34,7 +33,7 @@ const AppBar = () => {
           </Text>
         </Link>
         <Link to='/signin'>
-          {data && data.username ? <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
+          {data ? <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
           : <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>}
         </Link>
       </ScrollView>

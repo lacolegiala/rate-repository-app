@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
 import Text from './Text';
 import Constants from 'expo-constants';
 import { Link } from 'react-router-native';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 import { GET_USER } from '../graphql/queries';
 import { AuthenticatedUser } from '../types';
+import useAuthStorage from '../hooks/useAuthStorage';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,9 +20,14 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data } = useQuery<AuthenticatedUser>(GET_USER, {
-    fetchPolicy: 'cache-and-network'
-  })
+  const { data } = useQuery<AuthenticatedUser>(GET_USER)
+  const authStorage = useAuthStorage();
+  const apolloClient = useApolloClient()
+
+  const onSignOut = async () => {
+    await authStorage.removeAccessToken()
+    await apolloClient.resetStore()
+  }
 
   return (
     <Pressable>
@@ -32,9 +38,13 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
+        {data.me && 
+          <Pressable onPress={onSignOut}>
+            <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
+          </Pressable>
+        }
         <Link to='/signin'>
-          {data ? <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
-          : <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>}
+          <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>
         </Link>
       </ScrollView>
       </View>

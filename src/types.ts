@@ -22,6 +22,8 @@ export type AuthenticateInput = {
 }
 
 export type AuthenticatedUser = {
-  username: string,
-  id: string
+  me: {
+    username: string,
+    id: string
+  }
 }

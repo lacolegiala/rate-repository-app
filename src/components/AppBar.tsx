@@ -38,7 +38,7 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
-        {data.me && 
+        {data && data.me && 
           <Pressable onPress={onSignOut}>
             <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
           </Pressable>

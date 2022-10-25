@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Route, Routes } from 'react-router-native';
 
-import RepositoryList from './RepositoryList';
 import AppBar from './AppBar';
 import SignIn from './SignIn';
+import RepositoryList from './RepositoryList';
 
 const styles = StyleSheet.create({
   container: {

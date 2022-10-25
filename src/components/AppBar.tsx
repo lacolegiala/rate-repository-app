@@ -38,14 +38,15 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
-        {data && data.me && 
+        {data && data.me ?
           <Pressable onPress={onSignOut}>
             <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
           </Pressable>
+        :
+          <Link to='/signin'>
+            <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>
+          </Link>
         }
-        <Link to='/signin'>
-          <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>
-        </Link>
       </ScrollView>
       </View>
     </Pressable>

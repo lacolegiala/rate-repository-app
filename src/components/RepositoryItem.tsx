@@ -48,7 +48,7 @@ type Props = {
 
 const RepositoryItem = (props: Props) => {
   return (
-    <View style={styles.card}>
+    <View testID='repositoryItem' style={styles.card}>
       <View style={styles.upperInfo}>
         <Image style={styles.image} source={{uri: props.item.ownerAvatarUrl}}></Image>
         <View style={styles.upperInfoWrapper}>

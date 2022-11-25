@@ -5,14 +5,14 @@ describe('SignIn', () => {
   describe('SignInContainer', () => {
     it('calls onSubmit function with correct arguments when a valid form is submitted', async () => {
       const onSubmit = jest.fn()
-      const { getAllByPlaceholderText, getAllByTestId } = render(<SignInContainer onSubmit={onSubmit} initialValues={{
+      const { getByPlaceholderText, getByText } = render(<SignInContainer onSubmit={onSubmit} initialValues={{
         username: '',
         password: ''
       }} />)
 
-      fireEvent.changeText(getAllByPlaceholderText('Username'), 'kalle')
-      fireEvent.changeText(getAllByPlaceholderText('Password'), 'password')
-      fireEvent.press(getAllByTestId('signInButton'))
+      fireEvent.changeText(getByPlaceholderText('Username'), 'kalle')
+      fireEvent.changeText(getByPlaceholderText('Password'), 'password')
+      fireEvent.press(getByText('Sign in'))
 
       await waitFor(() => {
         // expect the onSubmit function to have been called once and with a correct first argument

@@ -3,11 +3,8 @@ import { View, StyleSheet, Pressable } from 'react-native'
 import FormikTextInput from './FormikTextInput';
 import { Formik } from 'formik'
 import * as yup from 'yup';
-import { useNavigate } from "react-router-dom";
 
 import Text from './Text'
-import AuthStorage from '../utils/authStorage';
-import { AuthenticateInput } from '../types';
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -31,44 +28,7 @@ const styles = StyleSheet.create({
   },
 })
 
-type SignInFormValues = {
-  username: string,
-  password: string
-}
-
-type SignInProps = {
-  signIn: (({ username, password }: AuthenticateInput) => Promise<{
-    data: {
-        authenticate: {
-            accessToken: string;
-        };
-    };
-}>)[]
-}
-
-const SignInContainer = (props: SignInProps) => {
-  const [signIn] = props.signIn
-  const initialValues: SignInFormValues = {
-    username: '',
-    password: ''
-  }
-
-  let navigate = useNavigate();
-
-  const onSubmit = async (values: SignInFormValues) => {
-    const { username, password } = values;
-
-    try {
-      const { data } = await signIn({ username: username, password: password });
-      const storage = new AuthStorage()
-      if (data) {
-        await storage.setAccessToken(data.authenticate.accessToken)
-        navigate("../", { replace: true });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const SignInContainer = ({ onSubmit, initialValues }) => {
 
   return (
     <Formik

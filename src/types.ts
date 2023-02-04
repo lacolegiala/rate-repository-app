@@ -7,7 +7,8 @@ export type Repository = {
   stargazersCount: number,
   ratingAverage: number,
   reviewCount: number,
-  ownerAvatarUrl: string
+  ownerAvatarUrl: string,
+  url: string
 }
 
 export type RepoNode = {

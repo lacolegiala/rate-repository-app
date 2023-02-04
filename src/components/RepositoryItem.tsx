@@ -47,6 +47,7 @@ type Props = {
 }
 
 const RepositoryItem = (props: Props) => {
+
   return (
     <View testID='repositoryItem' style={styles.card}>
       <View style={styles.upperInfo}>

@@ -34,7 +34,7 @@ export const GET_USER = gql`
 `
 
 export const GET_SINGLE_REPOSITORY = gql`
-  query GetSingleRepository($id: string!) {
+  query GetSingleRepository($id: ID!) {
     repository(id: $id) {
       id
       description

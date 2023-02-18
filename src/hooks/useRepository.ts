@@ -1,6 +1,6 @@
-import { useQuery } from "@apollo/client"
-import { GET_SINGLE_REPOSITORY } from "../graphql/queries"
-import { Repository } from "../types"
+import { useQuery } from "@apollo/client";
+import { GET_SINGLE_REPOSITORY } from "../graphql/queries";
+import { Repository } from "../types";
 
 type SingleRepositoryData = {
   repository: Repository

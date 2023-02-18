@@ -1,7 +1,6 @@
 import { Pressable, View } from "react-native"
 import { useParams } from "react-router-native"
 import * as Linking from 'expo-linking';
-import { Repository } from "../types"
 import RepositoryItem from "./RepositoryItem"
 import useRepository from "../hooks/useRepository";
 
@@ -11,7 +10,10 @@ type Props = {
 
 const SingleRepositoryView = (props: Props) => {
   const { id } = useParams<{ id: string }>()
-  const repository = useRepository({id: id}).repository
+  const { repository, loading } = useRepository({id: id})
+
+  if (loading) return null
+  
   return (
     <View>
       <RepositoryItem item={repository}></RepositoryItem>

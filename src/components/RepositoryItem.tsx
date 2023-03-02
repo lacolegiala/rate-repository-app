@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Linking, Pressable } from 'react-native';
 import Text from '../components/Text'
 import Stat from '../components/Stat'
 import { Repository } from '../types';
@@ -39,10 +39,25 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
+  buttonWrapper: {
+    alignItems: 'center'
+  },
+  githubButton: {
+    borderRadius: 2,
+    backgroundColor: '#0366d6',
+    width: 300,
+    margin: 6
+  },
+  buttonText: {
+    color: 'white',
+    padding: 2,
+    textAlign: 'center'
+  }
 })
 
 type Props = {
-  item: Repository
+  item: Repository,
+  githubLink?: string
 }
 
 const RepositoryItem = (props: Props) => {
@@ -68,6 +83,15 @@ const RepositoryItem = (props: Props) => {
         </View>
       </View>
       <Stat item={props.item}/>
+      {props.githubLink && 
+        <View style={styles.buttonWrapper}>
+          <Pressable style={styles.githubButton} onPress={() => Linking.openURL(props.githubLink)}>
+            <Text style={styles.buttonText}>
+              See in GitHub
+            </Text>
+          </Pressable>
+        </View>
+      }
     </View>
   );
 };

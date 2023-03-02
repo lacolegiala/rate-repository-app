@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   tagWrapper: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    flex: 1
   },
 })
 

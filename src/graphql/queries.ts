@@ -39,6 +39,7 @@ export const GET_SINGLE_REPOSITORY = gql`
       id
       description
       fullName
+      url
       name
       language
       stargazersCount

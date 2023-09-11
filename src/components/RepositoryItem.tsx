@@ -45,12 +45,14 @@ const styles = StyleSheet.create({
   githubButton: {
     borderRadius: 2,
     backgroundColor: '#0366d6',
-    width: 300,
-    margin: 6
+    width: 360,
+    padding: 10,
+    margin: 12
   },
   buttonText: {
     color: 'white',
     padding: 2,
+    fontWeight: 'bold',
     textAlign: 'center'
   }
 })
@@ -87,7 +89,7 @@ const RepositoryItem = (props: Props) => {
         <View style={styles.buttonWrapper}>
           <Pressable style={styles.githubButton} onPress={() => Linking.openURL(props.githubLink)}>
             <Text style={styles.buttonText}>
-              See in GitHub
+              Open in GitHub
             </Text>
           </Pressable>
         </View>

@@ -22,9 +22,23 @@ export type AuthenticateInput = {
   password: string
 }
 
+export type User = {
+  username: string,
+  id: string
+}
+
 export type AuthenticatedUser = {
-  me: {
-    username: string,
-    id: string
-  }
+  me: User
+}
+
+export type ReviewNode = {
+  node: Review
+}
+
+export type Review = {
+  id: string,
+  text: string,
+  rating: number,
+  createdAt: string,
+  user: User
 }

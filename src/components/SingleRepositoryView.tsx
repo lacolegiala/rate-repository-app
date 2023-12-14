@@ -80,6 +80,8 @@ const SingleRepositoryView = () => {
 
   if (loading || reviewsLoading) return null
 
+  console.log('review', reviews)
+
   return (
     <View>
       <FlatList

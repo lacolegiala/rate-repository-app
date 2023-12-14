@@ -6,6 +6,7 @@ import AppBar from './AppBar';
 import SignIn from './SignIn';
 import RepositoryList from './RepositoryList';
 import SingleRepositoryView from './SingleRepositoryView';
+import CreateReview from './CreateReview';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,8 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/:id" element={<SingleRepositoryView gitHubLink={true} />} />
+        <Route path="/:id" element={<SingleRepositoryView />} />
+        <Route path="/create" element={<CreateReview />} />
       </Routes>
     </View>
   );

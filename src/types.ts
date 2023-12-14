@@ -42,3 +42,10 @@ export type Review = {
   createdAt: string,
   user: User
 }
+
+export type CreatedReview = {
+  repositoryOwner: string,
+  repositoryName: string,
+  rating: number,
+  text: string
+}

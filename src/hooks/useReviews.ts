@@ -1,6 +1,6 @@
 import { ApolloError, useQuery } from "@apollo/client";
 import { GET_REVIEWS } from "../graphql/queries";
-import { Review, ReviewNode } from "../types";
+import { ReviewNode } from "../types";
 
 type RepositoryReviews = {
   reviewsLoading: boolean,

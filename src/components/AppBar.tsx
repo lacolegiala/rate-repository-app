@@ -38,6 +38,11 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
+        <Link to='/create'>
+          <Text color='appBarText' fontWeight='bold' fontSize='subheading'>
+            Create a review
+          </Text>
+        </Link>
         {data && data.me ?
           <Pressable onPress={onSignOut}>
             <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>

@@ -13,7 +13,6 @@ type Props = {
 }
 
 const useRepository = (props: Props): SingleRepositoryData => {
-  console.log('ids', props.id)
   const { loading, error, data } = useQuery(GET_SINGLE_REPOSITORY, {
     variables: { id: props.id },
     fetchPolicy: 'cache-and-network'

@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     opacity: 0.96
+  },
+  signedInContainer: {
+    flexDirection: 'row'
   }
 });
 
@@ -38,15 +41,17 @@ const AppBar = () => {
             Repositories
           </Text>
         </Link>
-        <Link to='/create'>
-          <Text color='appBarText' fontWeight='bold' fontSize='subheading'>
-            Create a review
-          </Text>
-        </Link>
         {data && data.me ?
-          <Pressable onPress={onSignOut}>
-            <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
-          </Pressable>
+          <View style={styles.signedInContainer}>
+            <Link to='/create'>
+              <Text color='appBarText' fontWeight='bold' fontSize='subheading'>
+                Create a review
+              </Text>
+            </Link>
+            <Pressable onPress={onSignOut}>
+              <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
+            </Pressable>
+          </View>
         :
           <Link to='/signin'>
             <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>

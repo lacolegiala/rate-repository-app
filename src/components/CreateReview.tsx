@@ -16,7 +16,7 @@ const CreateReview = () => {
   const initialValues: CreateReviewFormValues = {
     repositoryOwner: '',
     repositoryName: '',
-    rating: 0,
+    rating: undefined,
     review: ''
   }
 

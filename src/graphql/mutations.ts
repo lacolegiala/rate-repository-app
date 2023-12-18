@@ -13,6 +13,7 @@ export const CREATE_REVIEW = gql`
     createReview(review: $review) {
       id
       userId
+      repositoryId
     }
   }
 `

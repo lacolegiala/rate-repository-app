@@ -34,7 +34,7 @@ const TextInput = (props: Props) => {
     <NativeTextInput 
       autoCapitalize='none'
       style={props.error ? [textInputStyle, styles.error] : textInputStyle} 
-      secureTextEntry={props.secure} 
+      secureTextEntry={props.secure}
       {...props}
     />
   )

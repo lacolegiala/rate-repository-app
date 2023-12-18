@@ -18,7 +18,9 @@ const useReviews = (props: Props): RepositoryReviews => {
     fetchPolicy: 'cache-and-network'
   })
 
-  return { reviewsLoading: loading, error, reviews: data?.repository.reviews.edges }
+  const reviews = data?.repository?.reviews?.edges || []
+
+  return { reviewsLoading: loading, error, reviews }
 }
 
 export default useReviews

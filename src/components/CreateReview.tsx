@@ -25,17 +25,12 @@ const CreateReview = () => {
   const onSubmit = async (values: CreateReviewFormValues) => {
     const { repositoryOwner, repositoryName, rating, review } = values;
 
-    const ratingAsNumber = Number(rating)
-
-    console.log('nah', typeof ratingAsNumber)
-
     try {
       const { data } = await createReview({ 
         repositoryOwner: repositoryOwner, repositoryName: repositoryName, rating: Number(rating), text: review
       })
       if (data) {
-        const repositoryId = data.createReview.id
-        navigate(`../${repositoryId}`, {replace: true})
+        navigate(`../${data.createReview.repositoryId}`, {replace: true})
       }
     } catch (error) {
       console.log(error);

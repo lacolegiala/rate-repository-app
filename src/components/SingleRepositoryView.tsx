@@ -80,14 +80,12 @@ const SingleRepositoryView = () => {
 
   if (loading || reviewsLoading) return null
 
-  console.log('review', reviews)
-
   return (
     <View>
       <FlatList
         data={reviews}
         renderItem={({ item }) => <ReviewItem review={item.node} />}
-        keyExtractor={({ node }) => node.id}
+        keyExtractor={(item) => item.node.id}
         ListHeaderComponent={() => <RepositoryItem item={repository} githubLink={repository.url} />}
       />
     </View>

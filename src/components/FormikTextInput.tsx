@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
 type Props = {
   name: string,
   secure: boolean,
-  placeholder?: string
+  placeholder?: string,
+  multiline?: boolean
 }
 
 const FormikTextInput = (props: Props) => {
@@ -31,6 +32,7 @@ const FormikTextInput = (props: Props) => {
         onBlur={() => helpers.setTouched(true)}
         value={field.value}
         error={showError}
+        multiline={props.multiline ? props.multiline : false}
         {...props}
       />
       {showError && <Text style={styles.errorText}>{meta.error}</Text>}

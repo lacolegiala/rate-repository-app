@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     opacity: 0.96
   },
-  signedInContainer: {
+  rowContainer: {
     flexDirection: 'row'
   }
 });
@@ -42,7 +42,7 @@ const AppBar = () => {
           </Text>
         </Link>
         {data && data.me ?
-          <View style={styles.signedInContainer}>
+          <View style={styles.rowContainer}>
             <Link to='/create'>
               <Text color='appBarText' fontWeight='bold' fontSize='subheading'>
                 Create a review
@@ -53,9 +53,14 @@ const AppBar = () => {
             </Pressable>
           </View>
         :
-          <Link to='/signin'>
-            <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>
-          </Link>
+          <View style={styles.rowContainer}>
+            <Link to='/signin'>
+              <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign in</Text>
+            </Link>
+            <Link to='/signup'>
+              <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign up</Text>
+            </Link>
+          </View>
         }
       </ScrollView>
       </View>

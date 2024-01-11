@@ -8,7 +8,10 @@ import Text from './Text'
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required')
+  password: yup.string().required('Password is required'),
+  passwordConfirmation: yup.string()
+  .oneOf([yup.ref('password'), null])
+  .required('Password confirm is required')
 })
 
 const styles = StyleSheet.create({

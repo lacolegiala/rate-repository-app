@@ -27,6 +27,11 @@ export type User = {
   id: string
 }
 
+export type CreatedUser = {
+  username: string,
+  password: string
+}
+
 export type AuthenticatedUser = {
   me: User
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-native';
-import useSignIn from '../hooks/useSignIn';
-import AuthStorage from '../utils/authStorage';
-import SignInContainer from './SignInContainer';
 import SignUpContainer from './SignUpContainer';
+import useSignUp from '../hooks/useSignUp';
+import AuthStorage from '../utils/authStorage';
+import useSignIn from '../hooks/useSignIn';
 
 type SignUpFormValues = {
   username: string,
@@ -12,6 +12,7 @@ type SignUpFormValues = {
 }
 
 const SignUp = () => {
+  const [signUp] = useSignUp()
   const [signIn] = useSignIn()
 
   const initialValues: SignUpFormValues = {
@@ -25,16 +26,17 @@ const SignUp = () => {
   const onSubmit = async (values: SignUpFormValues) => {
     const { username, password, passwordConfirmation } = values;
 
-  //   try {
-  //     const { data } = await signIn({ username: username, password: password });
-  //     const storage = new AuthStorage()
-  //     if (data) {
-  //       await storage.setAccessToken(data.authenticate.accessToken)
-  //       navigate("../", { replace: true });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
+    try {
+      const { data } = await signUp({ username: username, password: password });
+      const storage = new AuthStorage()
+      if (data) {
+        const { data } = await signIn({ username: username, password: password })
+        await storage.setAccessToken(data.authenticate.accessToken)
+        navigate("../", { replace: true });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <SignUpContainer onSubmit={onSubmit} initialValues={initialValues} />

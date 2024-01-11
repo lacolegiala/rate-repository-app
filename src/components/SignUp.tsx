@@ -24,7 +24,7 @@ const SignUp = () => {
   let navigate = useNavigate();
 
   const onSubmit = async (values: SignUpFormValues) => {
-    const { username, password, passwordConfirmation } = values;
+    const { username, password } = values;
 
     try {
       const { data } = await signUp({ username: username, password: password });

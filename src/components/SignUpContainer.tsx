@@ -7,8 +7,8 @@ import * as yup from 'yup';
 import Text from './Text'
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
+  username: yup.string().min(5).max(30).required('Username is required'),
+  password: yup.string().min(5).max(30).required('Password is required'),
   passwordConfirmation: yup.string()
   .oneOf([yup.ref('password'), null])
   .required('Password confirm is required')

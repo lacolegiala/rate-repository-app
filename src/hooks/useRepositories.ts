@@ -13,7 +13,6 @@ type Props = {
 }
 
 const useRepositories = (props: Props): RepositoryData => {
-  console.log('nak', props)
   const { loading, error, data } = useQuery<RepositoryData>(GET_REPOSITORIES, {
     variables: { orderBy: props.orderBy.orderBy},
     fetchPolicy: 'cache-and-network'

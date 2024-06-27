@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-native';
 import { Repository } from '../types';
 import RepositoryItem from './RepositoryItem';
 import { Button, Divider, Menu, PaperProvider } from 'react-native-paper';
+import {Picker} from '@react-native-picker/picker';
 
 const styles = StyleSheet.create({
   separator: {
     height: 10,
-  },
+  }
 });
 
 const ItemSeparator = () => <View style={styles.separator} />;
@@ -18,16 +19,11 @@ type RenderItemProps = {
 }
 
 const RepositoryListContainer = ({ repositories }) => {
+  const [selectedSortOption, setSelectedSortOption] = useState();
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
 
-  const [visible, setVisible] = useState(false);
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
-    
   const navigate = useNavigate()
 
   const renderItem = (props: RenderItemProps) => {
@@ -41,22 +37,20 @@ const RepositoryListContainer = ({ repositories }) => {
 
   return (
     <FlatList
+      ListHeaderComponent={
+        <Picker
+          selectedValue={selectedSortOption}
+          onValueChange={(itemValue, itemIndex) =>
+            setSelectedSortOption(itemValue)
+          }>
+          <Picker.Item label="Latest" value="latest" />
+          <Picker.Item label="Highest rated" value="highest" />
+          <Picker.Item label="Lowest rated" value="lowest" />
+        </Picker>
+      }
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
-      ListHeaderComponent={
-      <PaperProvider>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<Button onPress={openMenu}>Show menu</Button>}>
-          <Menu.Item onPress={() => {}} title="Item 1" />
-          <Menu.Item onPress={() => {}} title="Item 2" />
-          <Divider />
-          <Menu.Item onPress={() => {}} title="Item 3" />
-        </Menu>
-      </PaperProvider>
-      }
     >
     </FlatList>
   );

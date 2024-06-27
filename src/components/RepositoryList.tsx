@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import useRepositories from "../hooks/useRepositories";
 import RepositoryListContainer from "./RepositoryListContainer";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
+import { SortOptions } from "../types";
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const [orderBy, setOrderBy] = useState<SortOptions>({orderBy: 'CREATED_AT'})
+
+  const { repositories } = useRepositories({orderBy: orderBy});
 
   return (
     <View>
-      {/* <FlatList ListHeaderComponent={} /> */}
       <RepositoryListContainer repositories={repositories} />
     </View>
   );

@@ -1,13 +1,21 @@
-import { useQuery } from '@apollo/client';
+import { ApolloError, useQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../graphql/queries';
-import { RepoNode } from '../types';
+import { SortOptions, RepoNode } from '../types';
 
 type RepositoryData = {
+  loading: boolean,
+  error: ApolloError,
   repositories: RepoNode
 }
 
-const useRepositories = () => {
+type Props = {
+  orderBy: SortOptions
+}
+
+const useRepositories = (props: Props): RepositoryData => {
+  console.log('nak', props)
   const { loading, error, data } = useQuery<RepositoryData>(GET_REPOSITORIES, {
+    variables: { orderBy: props.orderBy.orderBy},
     fetchPolicy: 'cache-and-network'
   })
 

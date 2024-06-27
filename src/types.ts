@@ -22,6 +22,10 @@ export type AuthenticateInput = {
   password: string
 }
 
+export type SortOptions = {
+  orderBy: 'CREATED_AT' | 'RATING_AVERAGE'
+}
+
 export type User = {
   username: string,
   id: string

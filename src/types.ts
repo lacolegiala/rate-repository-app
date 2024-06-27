@@ -23,7 +23,8 @@ export type AuthenticateInput = {
 }
 
 export type SortOptions = {
-  orderBy: 'CREATED_AT' | 'RATING_AVERAGE'
+  orderBy: 'CREATED_AT' | 'RATING_AVERAGE',
+  orderDirection: 'ASC' | 'DESC'
 }
 
 export type User = {

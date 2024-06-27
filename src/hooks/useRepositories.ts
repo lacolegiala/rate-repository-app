@@ -9,12 +9,12 @@ type RepositoryData = {
 }
 
 type Props = {
-  orderBy: SortOptions
+  sortOptions: SortOptions
 }
 
 const useRepositories = (props: Props): RepositoryData => {
   const { loading, error, data } = useQuery<RepositoryData>(GET_REPOSITORIES, {
-    variables: { orderBy: props.orderBy.orderBy},
+    variables: { orderBy: props.sortOptions.orderBy, orderDirection: props.sortOptions.orderDirection },
     fetchPolicy: 'cache-and-network'
   })
 

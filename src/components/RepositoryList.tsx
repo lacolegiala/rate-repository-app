@@ -5,9 +5,9 @@ import { View } from "react-native";
 import { SortOptions } from "../types";
 
 const RepositoryList = () => {
-  const [orderBy, setOrderBy] = useState<SortOptions>({orderBy: 'CREATED_AT'})
+  const [orderBy, setOrderBy] = useState<SortOptions>({orderBy: 'CREATED_AT', orderDirection: 'DESC'})
 
-  const { repositories } = useRepositories({orderBy: orderBy});
+  const { repositories } = useRepositories({sortOptions: orderBy});
 
   return (
     <View>

@@ -3,25 +3,21 @@ import useRepositories from "../hooks/useRepositories";
 import RepositoryListContainer from "./RepositoryListContainer";
 import { View } from "react-native";
 import { SortOptions } from "../types";
-import { Searchbar } from "react-native-paper";
 
 const RepositoryList = () => {
   const [sortOptions, setSortOptions] = useState<SortOptions>({orderBy: 'CREATED_AT', orderDirection: 'DESC'});
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchKeyword, setSearchKeyword] = useState<string>('')
 
-  const { repositories } = useRepositories({sortOptions: sortOptions});
+  const { repositories } = useRepositories({sortOptions: sortOptions, searchKeyword: searchKeyword});
 
   return (
     <View>
-      <Searchbar 
-        placeholder="Search"
-        onChangeText={setSearchQuery}
-        value={searchQuery}
-      />
       <RepositoryListContainer 
         repositories={repositories}
         sortOptions={sortOptions}
         setSortOptions={setSortOptions}
+        searchKeyword={searchKeyword}
+        setSearchKeyword={setSearchKeyword}
       />
     </View>
   );

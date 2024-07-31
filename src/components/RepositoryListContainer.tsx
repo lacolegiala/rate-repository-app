@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-native';
 import { Repository } from '../types';
 import RepositoryItem from './RepositoryItem';
 import { Picker } from '@react-native-picker/picker';
+import { Searchbar } from 'react-native-paper';
 
 const styles = StyleSheet.create({
   separator: {
@@ -17,11 +18,11 @@ type RenderItemProps = {
   item: Repository
 }
 
-const RepositoryListContainer = ({ repositories, sortOptions, setSortOptions }) => {
+const RepositoryListContainer = ({ repositories, sortOptions, setSortOptions, searchKeyword, setSearchKeyword }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : [];
-
+  
   const navigate = useNavigate();
 
   const renderItem = (props: RenderItemProps) => (
@@ -49,14 +50,21 @@ const RepositoryListContainer = ({ repositories, sortOptions, setSortOptions }) 
   return (
     <FlatList
       ListHeaderComponent={
-        <Picker
-          selectedValue={sortOptions.orderBy === 'CREATED_AT' ? 'latest' : sortOptions.orderDirection === 'DESC' ? 'highest' : 'lowest'}
-          onValueChange={(itemValue) => handleSortChange(itemValue)}
-        >
-          <Picker.Item label="Latest" value="latest" />
-          <Picker.Item label="Highest rated" value="highest" />
-          <Picker.Item label="Lowest rated" value="lowest" />
-        </Picker>
+        <View>
+          <Searchbar 
+          placeholder="Search"
+          onChangeText={setSearchKeyword}
+          value={searchKeyword}
+        />
+          <Picker
+            selectedValue={sortOptions.orderBy === 'CREATED_AT' ? 'latest' : sortOptions.orderDirection === 'DESC' ? 'highest' : 'lowest'}
+            onValueChange={(itemValue) => handleSortChange(itemValue)}
+          >
+            <Picker.Item label="Latest" value="latest" />
+            <Picker.Item label="Highest rated" value="highest" />
+            <Picker.Item label="Lowest rated" value="lowest" />
+          </Picker>
+        </View>
       }
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}

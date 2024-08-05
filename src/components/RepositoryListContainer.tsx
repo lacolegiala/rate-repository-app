@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
-import { Repository } from '../types';
+import { RepoNode, Repository, SortOptions } from '../types';
 import RepositoryItem from './RepositoryItem';
 import { Picker } from '@react-native-picker/picker';
 import { Searchbar } from 'react-native-paper';
+import debounce from "lodash.debounce";
 
 const styles = StyleSheet.create({
   separator: {
@@ -18,9 +19,17 @@ type RenderItemProps = {
   item: Repository
 }
 
-const RepositoryListContainer = ({ repositories, sortOptions, setSortOptions, searchKeyword, setSearchKeyword }) => {
-  const repositoryNodes = repositories
-    ? repositories.edges.map(edge => edge.node)
+type RepositoryListContainerProps = {
+  repositories: RepoNode
+  sortOptions: SortOptions,
+  setSortOptions: React.Dispatch<React.SetStateAction<SortOptions>>,
+  searchKeyword: string,
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>
+}
+
+const RepositoryListContainer = (props: RepositoryListContainerProps) => {
+  const repositoryNodes = props.repositories
+    ? props.repositories.edges.map(edge => edge.node)
     : [];
   
   const navigate = useNavigate();
@@ -44,8 +53,22 @@ const RepositoryListContainer = ({ repositories, sortOptions, setSortOptions, se
         newSortOptions = { orderBy: 'CREATED_AT', orderDirection: 'DESC' };
         break;
     }
-    setSortOptions(newSortOptions);
+    props.setSortOptions(newSortOptions);
   };
+
+  const handleSearchChange = useCallback((value: string) => {
+    props.setSearchKeyword(value);
+  }, [props.setSearchKeyword]);
+
+  const debouncedResults = useMemo(() => {
+    return debounce(handleSearchChange, 500);
+  }, [handleSearchChange]);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  }, [debouncedResults]);
 
   return (
     <FlatList
@@ -53,11 +76,13 @@ const RepositoryListContainer = ({ repositories, sortOptions, setSortOptions, se
         <View>
           <Searchbar 
           placeholder="Search"
-          onChangeText={setSearchKeyword}
-          value={searchKeyword}
+          onChangeText={(text) => {
+            debouncedResults(text); 
+          }}
+          value={props.searchKeyword}
         />
           <Picker
-            selectedValue={sortOptions.orderBy === 'CREATED_AT' ? 'latest' : sortOptions.orderDirection === 'DESC' ? 'highest' : 'lowest'}
+            selectedValue={props.sortOptions.orderBy === 'CREATED_AT' ? 'latest' : props.sortOptions.orderDirection === 'DESC' ? 'highest' : 'lowest'}
             onValueChange={(itemValue) => handleSortChange(itemValue)}
           >
             <Picker.Item label="Latest" value="latest" />

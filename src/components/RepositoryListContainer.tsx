@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useNavigate } from 'react-router-native';
 import { RepoNode, Repository, SortOptions } from '../types';
@@ -28,6 +28,8 @@ type RepositoryListContainerProps = {
 }
 
 const RepositoryListContainer = (props: RepositoryListContainerProps) => {
+  const [searchValue, setSearchValue] = useState(props.searchKeyword);
+
   const repositoryNodes = props.repositories
     ? props.repositories.edges.map(edge => edge.node)
     : [];
@@ -56,19 +58,19 @@ const RepositoryListContainer = (props: RepositoryListContainerProps) => {
     props.setSortOptions(newSortOptions);
   };
 
-  const handleSearchChange = useCallback((value: string) => {
-    props.setSearchKeyword(value);
-  }, [props.setSearchKeyword]);
-
-  const debouncedResults = useMemo(() => {
-    return debounce(handleSearchChange, 500);
-  }, [handleSearchChange]);
+  const debouncedSearch = useCallback(
+    debounce((query: string) => {
+      props.setSearchKeyword(query);
+    }, 500),
+    [props.setSearchKeyword]
+  );
 
   useEffect(() => {
+    debouncedSearch(searchValue);
     return () => {
-      debouncedResults.cancel();
+      debouncedSearch.cancel();
     };
-  }, [debouncedResults]);
+  }, [searchValue, debouncedSearch]);
 
   return (
     <FlatList
@@ -77,9 +79,9 @@ const RepositoryListContainer = (props: RepositoryListContainerProps) => {
           <Searchbar 
           placeholder="Search"
           onChangeText={(text) => {
-            debouncedResults(text); 
+            setSearchValue(text);
           }}
-          value={props.searchKeyword}
+          value={searchValue}
         />
           <Picker
             selectedValue={props.sortOptions.orderBy === 'CREATED_AT' ? 'latest' : props.sortOptions.orderDirection === 'DESC' ? 'highest' : 'lowest'}

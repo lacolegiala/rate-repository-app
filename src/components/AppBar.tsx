@@ -48,6 +48,11 @@ const AppBar = () => {
                 Create a review
               </Text>
             </Link>
+            <Link to='/myreviews'>
+              <Text color='appBarText' fontWeight='bold' fontSize='subheading'>
+                My reviews
+              </Text>
+            </Link>
             <Pressable onPress={onSignOut}>
               <Text color='appBarText' fontWeight='bold' fontSize='subheading'>Sign out</Text>
             </Pressable>

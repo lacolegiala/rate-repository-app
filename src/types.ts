@@ -32,6 +32,11 @@ export type User = {
   id: string
 }
 
+export type UserWithReviews = {
+  user: User,
+  reviews: Review[]
+}
+
 export type CreatedUser = {
   username: string,
   password: string

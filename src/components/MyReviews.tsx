@@ -1,6 +1,8 @@
 import { View } from "react-native"
-import { Review, User } from "../types"
+import { Review, User, UserWithReviews } from "../types"
 import Text from "./Text"
+import { useQuery } from "@apollo/client"
+import { GET_USER } from "../graphql/queries"
 
 type MyReviewsProps = {
   user: User,
@@ -8,6 +10,12 @@ type MyReviewsProps = {
 }
 
 const MyReviews = () => {
+  const {data} = useQuery<UserWithReviews>(GET_USER, {
+    variables: { includeReviews: true }
+  })
+
+  console.log('data', data)
+
   return (
     <View>
       <Text>My reviews</Text>

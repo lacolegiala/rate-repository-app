@@ -36,6 +36,10 @@ export const GET_USER = gql`
             text
             rating
             createdAt
+            repository {
+              id
+              fullName
+            }
           }
         }
       }

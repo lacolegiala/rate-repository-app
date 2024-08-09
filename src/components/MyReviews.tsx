@@ -1,26 +1,39 @@
-import { View } from "react-native"
-import { Review, User, UserWithReviews } from "../types"
-import Text from "./Text"
-import { useQuery } from "@apollo/client"
-import { GET_USER } from "../graphql/queries"
+import { FlatList, View, StyleSheet } from "react-native";
+import { UserWithReviews } from "../types";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../graphql/queries";
+import ReviewItem from "./ReviewItem";
 
-type MyReviewsProps = {
-  user: User,
-  reviews: Review[]
-}
+const styles = StyleSheet.create({
+  separator: {
+    height: 10,
+  },
+});
+
+const ItemSeparator = () => <View style={styles.separator} />;
 
 const MyReviews = () => {
-  const {data} = useQuery<UserWithReviews>(GET_USER, {
-    variables: { includeReviews: true }
-  })
+  const { loading, data } = useQuery<UserWithReviews>(GET_USER, {
+    variables: { includeReviews: true },
+    fetchPolicy: 'cache-and-network'
+  });
 
-  console.log('data', data)
+  if (loading) return null;
 
   return (
     <View>
-      <Text>My reviews</Text>
+      {data?.me?.reviews?.edges && (
+        <FlatList
+          data={data.me.reviews.edges}
+          ItemSeparatorComponent={ItemSeparator}
+          renderItem={({ item }) => (
+            <ReviewItem header={item.node.repository.fullName} review={item.node} repositoryView={false} />
+          )}
+          keyExtractor={(item) => item.node.id}
+        />
+      )}
     </View>
-  )
-}
+  );
+};
 
-export default MyReviews
+export default MyReviews;

@@ -33,8 +33,15 @@ export type User = {
 }
 
 export type UserWithReviews = {
-  user: User,
-  reviews: Review[]
+  me: {
+    id: string,
+    username: string,
+    reviews: {
+      edges: {
+        node: Review
+      }[]
+    }
+  }
 }
 
 export type CreatedUser = {
@@ -55,7 +62,8 @@ export type Review = {
   text: string,
   rating: number,
   createdAt: string,
-  user: User
+  user?: User,
+  repository: Repository
 }
 
 export type CreatedReview = {

@@ -1,6 +1,8 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import { Review } from "../types";
 import Text from './Text'
+import { Button } from "react-native-paper";
+import { useNavigate } from "react-router-native";
 
 type Props = {
   header: string,
@@ -53,6 +55,7 @@ const styles = StyleSheet.create({
 })
 
 const ReviewItem = (props: Props) => {
+  const navigate = useNavigate();
   return (
     <View style={styles.card}>
       <View style={styles.ratingCircle}>
@@ -65,6 +68,10 @@ const ReviewItem = (props: Props) => {
           <Text key={props.review.id} style={styles.text}>
             {props.review.text}
           </Text>
+          <Button onPress={() => navigate(`/${props.review.repository.id}`)}>
+            See repository
+          </Button>
+          <Button>Delete</Button>
         </View>
       </View>
     </View>

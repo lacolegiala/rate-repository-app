@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Alert } from "react-native";
 import { Review } from "../types";
 import Text from './Text'
 import { Button } from "react-native-paper";
@@ -56,6 +56,20 @@ const styles = StyleSheet.create({
 
 const ReviewItem = (props: Props) => {
   const navigate = useNavigate();
+
+  const confirmation = () => {
+    Alert.alert('Delete review', 'Are you sure you want to delete this review?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('cancel'),
+        style: 'cancel'
+      },
+      {
+        text: 'Delete',
+        onPress: () => console.log('delete')
+      }
+    ])
+  }
   return (
     <View style={styles.card}>
       <View style={styles.ratingCircle}>
@@ -71,7 +85,7 @@ const ReviewItem = (props: Props) => {
           <Button onPress={() => navigate(`/${props.review.repository.id}`)}>
             See repository
           </Button>
-          <Button>Delete</Button>
+          <Button onPress={confirmation}>Delete</Button>
         </View>
       </View>
     </View>

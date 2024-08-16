@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row'
   },
-  button: {
+  buttonView: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
@@ -66,6 +66,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: '#2A64CC',
+    marginVertical: 12,
+    marginHorizontal: 10
+  },
+  buttonDelete: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: '#C54650',
     marginVertical: 12,
     marginHorizontal: 10
   }
@@ -117,12 +128,12 @@ const ReviewItem = (props: Props) => {
           </Text>
           {!props.repositoryView && (
             <View style={styles.buttonContainer}>
-              <Button style={styles.button} onPress={() => navigate(`/${props.review.repository.id}`)}>
+              <Button style={styles.buttonView} onPress={() => navigate(`/${props.review.repository.id}`)}>
                 <Text fontSize='regular' color='appBarText' fontWeight='bold'>
                   See repository
                 </Text>
               </Button>
-              <Button style={styles.button} onPress={() => confirmation(props.review.id)}>
+              <Button style={styles.buttonDelete} onPress={() => confirmation(props.review.id)}>
                 <Text fontSize='regular' color='appBarText' fontWeight='bold'>
                   Delete
                 </Text>

@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingRight: 4,
     marginTop: 8,
+    flexDirection: 'column'
+  },
+  infoBox: {
     flexDirection: 'row'
   },
   ratingCircle: {
@@ -114,34 +117,36 @@ const ReviewItem = (props: Props) => {
 
   return (
     <View style={styles.card}>
-      <View style={styles.ratingCircle}>
-        <Text style={styles.rating}>{props.review.rating}</Text>
-      </View>
-      <View style={styles.info}>
-        <Text style={[styles.header, styles.infoItem]}>{props.header}</Text>
-        <Text color='textSecondary' style={styles.infoItem}>
-          {new Date(props.review.createdAt).toLocaleDateString()}
-        </Text>
-        <View style={styles.textContainer}>
-          <Text key={props.review.id} style={styles.text}>
-            {props.review.text}
+      <View style={styles.infoBox}>
+        <View style={styles.ratingCircle}>
+          <Text style={styles.rating}>{props.review.rating}</Text>
+        </View>
+        <View style={styles.info}>
+          <Text style={[styles.header, styles.infoItem]}>{props.header}</Text>
+          <Text color='textSecondary' style={styles.infoItem}>
+            {new Date(props.review.createdAt).toLocaleDateString()}
           </Text>
-          {!props.repositoryView && (
-            <View style={styles.buttonContainer}>
-              <Button style={styles.buttonView} onPress={() => navigate(`/${props.review.repository.id}`)}>
-                <Text fontSize='regular' color='appBarText' fontWeight='bold'>
-                  See repository
-                </Text>
-              </Button>
-              <Button style={styles.buttonDelete} onPress={() => confirmation(props.review.id)}>
-                <Text fontSize='regular' color='appBarText' fontWeight='bold'>
-                  Delete
-                </Text>
-              </Button>
-            </View>
-          )}
+          <View style={styles.textContainer}>
+            <Text key={props.review.id} style={styles.text}>
+              {props.review.text}
+            </Text>
+          </View>
         </View>
       </View>
+      {!props.repositoryView && (
+        <View style={styles.buttonContainer}>
+          <Button style={styles.buttonView} onPress={() => navigate(`/${props.review.repository.id}`)}>
+            <Text fontSize='regular' color='appBarText' fontWeight='bold'>
+              View repository
+            </Text>
+          </Button>
+          <Button style={styles.buttonDelete} onPress={() => confirmation(props.review.id)}>
+            <Text fontSize='regular' color='appBarText' fontWeight='bold'>
+              Delete review
+            </Text>
+          </Button>
+        </View>
+      )}
     </View>
   );
 };

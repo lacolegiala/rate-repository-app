@@ -1,14 +1,17 @@
-import { View, StyleSheet, Pressable, Alert } from "react-native";
-import { Review } from "../types";
-import Text from './Text'
+import { View, StyleSheet, Alert } from "react-native";
+import { Review, UserWithReviews } from "../types";
+import Text from './Text';
 import { Button } from "react-native-paper";
 import { useNavigate } from "react-router-native";
+import { ApolloQueryResult, OperationVariables, useMutation } from "@apollo/client";
+import { DELETE_REVIEW } from "../graphql/mutations";
 
 type Props = {
   header: string,
   review: Review,
-  repositoryView: boolean
-}
+  repositoryView: boolean,
+  refetch: (variables?: Partial<OperationVariables>) => Promise<ApolloQueryResult<UserWithReviews>>
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -51,13 +54,29 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16
+  },
+  buttonContainer: {
+    flexDirection: 'row'
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: '#2A64CC',
+    marginVertical: 12,
+    marginHorizontal: 10
   }
-})
+});
 
 const ReviewItem = (props: Props) => {
   const navigate = useNavigate();
 
-  const confirmation = () => {
+  const [mutate] = useMutation<{ deleteReview: boolean }, { id: string }>(DELETE_REVIEW);
+
+  const confirmation = (id: string) => {
     Alert.alert('Delete review', 'Are you sure you want to delete this review?', [
       {
         text: 'Cancel',
@@ -66,10 +85,22 @@ const ReviewItem = (props: Props) => {
       },
       {
         text: 'Delete',
-        onPress: () => console.log('delete')
+        onPress: async () => {
+          try {
+            const { data } = await mutate({ variables: { id } });
+            if (data?.deleteReview) {
+              props.refetch();
+            } else {
+              console.log('Failed to delete the review');
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }
       }
-    ])
-  }
+    ]);
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.ratingCircle}>
@@ -77,19 +108,31 @@ const ReviewItem = (props: Props) => {
       </View>
       <View style={styles.info}>
         <Text style={[styles.header, styles.infoItem]}>{props.header}</Text>
-        <Text color='textSecondary' style={styles.infoItem}>{new Date(props.review.createdAt).toLocaleDateString()}</Text>
+        <Text color='textSecondary' style={styles.infoItem}>
+          {new Date(props.review.createdAt).toLocaleDateString()}
+        </Text>
         <View style={styles.textContainer}>
           <Text key={props.review.id} style={styles.text}>
             {props.review.text}
           </Text>
-          <Button onPress={() => navigate(`/${props.review.repository.id}`)}>
-            See repository
-          </Button>
-          <Button onPress={confirmation}>Delete</Button>
+          {!props.repositoryView && (
+            <View style={styles.buttonContainer}>
+              <Button style={styles.button} onPress={() => navigate(`/${props.review.repository.id}`)}>
+                <Text fontSize='regular' color='appBarText' fontWeight='bold'>
+                  See repository
+                </Text>
+              </Button>
+              <Button style={styles.button} onPress={() => confirmation(props.review.id)}>
+                <Text fontSize='regular' color='appBarText' fontWeight='bold'>
+                  Delete
+                </Text>
+              </Button>
+            </View>
+          )}
         </View>
       </View>
     </View>
-  )
+  );
 };
 
-export default ReviewItem
+export default ReviewItem;

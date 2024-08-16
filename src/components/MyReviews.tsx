@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const MyReviews = () => {
-  const { loading, data } = useQuery<UserWithReviews>(GET_USER, {
+  const { loading, data, refetch } = useQuery<UserWithReviews>(GET_USER, {
     variables: { includeReviews: true },
     fetchPolicy: 'cache-and-network'
   });
@@ -27,7 +27,7 @@ const MyReviews = () => {
           data={data.me.reviews.edges}
           ItemSeparatorComponent={ItemSeparator}
           renderItem={({ item }) => (
-            <ReviewItem header={item.node.repository.fullName} review={item.node} repositoryView={false} />
+            <ReviewItem header={item.node.repository.fullName} review={item.node} repositoryView={false} refetch={refetch} />
           )}
           keyExtractor={(item) => item.node.id}
         />

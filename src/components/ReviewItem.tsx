@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
   buttonView: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
+    paddingVertical: 10,
+    paddingHorizontal: 28,
     borderRadius: 4,
     elevation: 3,
     backgroundColor: '#2A64CC',
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
   buttonDelete: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
+    paddingVertical: 10,
+    paddingHorizontal: 28,
     borderRadius: 4,
     elevation: 3,
     backgroundColor: '#C54650',
@@ -136,12 +136,12 @@ const ReviewItem = (props: Props) => {
       {!props.repositoryView && (
         <View style={styles.buttonContainer}>
           <Button style={styles.buttonView} onPress={() => navigate(`/${props.review.repository.id}`)}>
-            <Text fontSize='regular' color='appBarText' fontWeight='bold'>
+            <Text fontSize='subheading' color='appBarText' fontWeight='bold'>
               View repository
             </Text>
           </Button>
           <Button style={styles.buttonDelete} onPress={() => confirmation(props.review.id)}>
-            <Text fontSize='regular' color='appBarText' fontWeight='bold'>
+            <Text fontSize='subheading' color='appBarText' fontWeight='bold'>
               Delete review
             </Text>
           </Button>

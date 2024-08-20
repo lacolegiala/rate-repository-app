@@ -5,7 +5,7 @@ import { ReviewNode } from "../types";
 type RepositoryReviews = {
   reviewsLoading: boolean,
   error: ApolloError,
-  reviews: ReviewNode[]
+  reviews: ReviewNode
 }
 
 type Props = {
@@ -18,7 +18,7 @@ const useReviews = (props: Props): RepositoryReviews => {
     fetchPolicy: 'cache-and-network'
   })
 
-  const reviews = data?.repository?.reviews?.edges || []
+  const reviews = data?.repository?.reviews || []
 
   return { reviewsLoading: loading, error, reviews }
 }

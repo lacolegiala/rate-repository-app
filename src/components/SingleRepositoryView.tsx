@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from "react-native"
+import { FlatList, View } from "react-native"
 import { useParams } from "react-router-native"
 import RepositoryItem from "./RepositoryItem"
 import useRepository from "../hooks/useRepository";
@@ -13,12 +13,16 @@ const SingleRepositoryView = () => {
 
   if (loading || reviewsLoading) return null
 
+  const reviewNodes = reviews
+    ? reviews.edges.map(edge => edge.node)
+    : [];
+  
   return (
     <View>
       <FlatList
-        data={reviews}
-        renderItem={({ item }) => <ReviewItem header={item.node.user.username} review={item.node} repositoryView />}
-        keyExtractor={(item) => item.node.id}
+        data={reviewNodes}
+        renderItem={({ item }) => <ReviewItem header={item.user.username} review={item} repositoryView />}
+        keyExtractor={(item) => item.id}
         ListHeaderComponent={() => <RepositoryItem item={repository} githubLink={repository.url} />}
       />
     </View>

@@ -62,7 +62,9 @@ export type AuthenticatedUser = {
 }
 
 export type ReviewNode = {
-  node: Review
+  edges: {
+    node: Review
+  }[]
 }
 
 export type Review = {

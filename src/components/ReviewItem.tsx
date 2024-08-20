@@ -10,7 +10,7 @@ type Props = {
   header: string,
   review: Review,
   repositoryView: boolean,
-  refetch: (variables?: Partial<OperationVariables>) => Promise<ApolloQueryResult<UserWithReviews>>
+  refetch?: (variables?: Partial<OperationVariables>) => Promise<ApolloQueryResult<UserWithReviews>>
 };
 
 const styles = StyleSheet.create({

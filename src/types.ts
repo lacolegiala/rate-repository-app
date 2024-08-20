@@ -8,13 +8,21 @@ export type Repository = {
   ratingAverage: number,
   reviewCount: number,
   ownerAvatarUrl: string,
-  url: string
+  url: string,
+}
+
+export type PageInfo = {
+  hasPreviousPage: boolean,
+  hasNextPage: boolean,
+  startCursor: string,
+  endCursor: string
 }
 
 export type RepoNode = {
   edges: Array<{
     node: Repository
-  }>
+  }>,
+  pageInfo: PageInfo
 }
 
 export type AuthenticateInput = {

@@ -8,7 +8,11 @@ const RepositoryList = () => {
   const [sortOptions, setSortOptions] = useState<SortOptions>({orderBy: 'CREATED_AT', orderDirection: 'DESC'});
   const [searchKeyword, setSearchKeyword] = useState<string>('')
 
-  const { repositories } = useRepositories({sortOptions: sortOptions, searchKeyword: searchKeyword});
+  const { repositories, fetchMore } = useRepositories({sortOptions: sortOptions, searchKeyword: searchKeyword, first: 8});
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <View>
@@ -18,6 +22,7 @@ const RepositoryList = () => {
         setSortOptions={setSortOptions}
         searchKeyword={searchKeyword}
         setSearchKeyword={setSearchKeyword}
+        onEndReach={onEndReach}
       />
     </View>
   );

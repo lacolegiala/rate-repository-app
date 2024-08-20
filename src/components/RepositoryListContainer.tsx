@@ -24,7 +24,8 @@ type RepositoryListContainerProps = {
   sortOptions: SortOptions,
   setSortOptions: React.Dispatch<React.SetStateAction<SortOptions>>,
   searchKeyword: string,
-  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>,
+  onEndReach: () => void
 }
 
 const RepositoryListContainer = (props: RepositoryListContainerProps) => {
@@ -96,6 +97,8 @@ const RepositoryListContainer = (props: RepositoryListContainerProps) => {
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
+      onEndReached={props.onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };

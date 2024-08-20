@@ -1,10 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const GET_REPOSITORIES = gql`
-  query GetRepositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String) {
-    repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword) {
+  query GetRepositories($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String, $first: Int, $after: String) {
+    repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword, first: $first, after: $after) {
       totalCount
       pageInfo {
+        endCursor
+        startCursor
         hasNextPage
       }
       edges {
@@ -20,6 +22,7 @@ export const GET_REPOSITORIES = gql`
           reviewCount
           ownerAvatarUrl
         }
+        cursor
       }
     }
   }

@@ -1,26 +1,44 @@
 import { ApolloError, useQuery } from "@apollo/client";
 import { GET_REVIEWS } from "../graphql/queries";
-import { ReviewNode } from "../types";
+import { RepoNode, Repository, ReviewNode } from "../types";
 
 type RepositoryReviews = {
   reviewsLoading: boolean,
   error: ApolloError,
-  reviews: ReviewNode
+  repository: Repository,
+  reviews: ReviewNode,
+  fetchMore: () => void
 }
 
 type Props = {
-  id: string
+  id: string,
+  first: number
 }
 
 const useReviews = (props: Props): RepositoryReviews => {
-  const { loading, error, data } = useQuery(GET_REVIEWS, {
-    variables: { id: props.id },
+  const { loading, error, data, fetchMore, ...result } = useQuery<RepositoryReviews>(GET_REVIEWS, {
+    variables: { id: props.id, first: props.first },
     fetchPolicy: 'cache-and-network'
   })
 
-  const reviews = data?.repository?.reviews || []
+  const reviews: ReviewNode = data?.repository.reviews || null
 
-  return { reviewsLoading: loading, error, reviews }
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repository.reviews.pageInfo.endCursor,
+        ...props
+      },
+    });
+  };
+
+  return { reviewsLoading: loading, error, repository: data?.repository, reviews: reviews, fetchMore: handleFetchMore, ...result }
 }
 
 export default useReviews

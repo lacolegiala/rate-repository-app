@@ -9,6 +9,7 @@ export type Repository = {
   reviewCount: number,
   ownerAvatarUrl: string,
   url: string,
+  reviews: ReviewNode
 }
 
 export type PageInfo = {
@@ -64,7 +65,8 @@ export type AuthenticatedUser = {
 export type ReviewNode = {
   edges: {
     node: Review
-  }[]
+  }[],
+  pageInfo: PageInfo
 }
 
 export type Review = {
